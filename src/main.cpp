@@ -9,6 +9,8 @@ TaskHandle_t blinkTaskHandle = NULL;
 
 void BlinkTask(void* pvParameters)
 {  
+    gpio_init(PICO_DEFAULT_LED_PIN);
+    gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
     for(;;)  
     {
         gpio_put(PICO_DEFAULT_LED_PIN, true);
@@ -21,8 +23,6 @@ void BlinkTask(void* pvParameters)
 int main(void)
 {
     stdio_init_all();
-    gpio_init(PICO_DEFAULT_LED_PIN);
-    gpio_set_dir(PICO_DEFAULT_LED_PIN, GPIO_OUT);
 
     xTaskCreate(BlinkTask, "BlinkTask", 256, NULL, 1, &blinkTaskHandle);
     vTaskStartScheduler();
